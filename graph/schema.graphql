@@ -2,27 +2,50 @@
 #
 # https://gqlgen.com/getting-started/
 
-type Todo {
-  id: ID!
-  text: String!
-  done: Boolean!
-  user: User!
+type Story {
+    id: String!
+    name: String!
+    online: Int!
+    people: Int!
+    tags: [String!]!
+    turns: [Turn!]!
+}
+
+type Turn {
+    id: ID!
+    user: User!
+    value: String!
 }
 
 type User {
-  id: ID!
-  name: String!
+    id: ID!
+    name: String!
+}
+
+input StoryInput {
+    name: String!
+    tags: [String!]!
+}
+
+input TurnInput {
+    user: ID!
+    value: String!
 }
 
 type Query {
-  todos: [Todo!]!
-}
-
-input NewTodo {
-  text: String!
-  userId: String!
+    stories: [Story!]!
+    story(id: ID!): Story!
+    users: [User!]!
+    user(id: ID!): User!
 }
 
 type Mutation {
-  createTodo(input: NewTodo!): Todo!
+    createUser: User!
+    createStory(input: StoryInput!): Story!
+    createTurn(input: TurnInput!): User!
+}
+
+type Subscription {
+    turns(story: ID!): Turn!
+    stories: Story!
 }

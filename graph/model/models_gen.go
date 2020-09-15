@@ -2,16 +2,29 @@
 
 package model
 
-type NewTodo struct {
-	Text   string `json:"text"`
-	UserID string `json:"userId"`
+type Story struct {
+	ID     string   `json:"id"`
+	Name   string   `json:"name"`
+	Online int      `json:"online"`
+	People int      `json:"people"`
+	Tags   []string `json:"tags"`
+	Turns  []*Turn  `json:"turns"`
 }
 
-type Todo struct {
-	ID   string `json:"id"`
-	Text string `json:"text"`
-	Done bool   `json:"done"`
-	User *User  `json:"user"`
+type StoryInput struct {
+	Name string   `json:"name"`
+	Tags []string `json:"tags"`
+}
+
+type Turn struct {
+	ID    string `json:"id"`
+	User  *User  `json:"user"`
+	Value string `json:"value"`
+}
+
+type TurnInput struct {
+	User  string `json:"user"`
+	Value string `json:"value"`
 }
 
 type User struct {
