@@ -17,17 +17,17 @@ type StoryInput struct {
 }
 
 type Turn struct {
-	ID    string `json:"id"`
+	ID    int    `json:"id"`
 	User  *User  `json:"user"`
 	Value string `json:"value"`
 }
 
 type TurnInput struct {
-	User  string `json:"user"`
+	User  int    `json:"user"`
 	Value string `json:"value"`
 }
 
 type User struct {
-	ID   string `json:"id"`
+	ID   int    `json:"id"`
 	Name string `json:"name"`
 }

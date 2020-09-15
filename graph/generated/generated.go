@@ -53,8 +53,8 @@ type ComplexityRoot struct {
 
 	Query struct {
 		Stories func(childComplexity int) int
-		Story   func(childComplexity int, id string) int
-		User    func(childComplexity int, id string) int
+		Story   func(childComplexity int, id int) int
+		User    func(childComplexity int, id int) int
 		Users   func(childComplexity int) int
 	}
 
@@ -69,7 +69,7 @@ type ComplexityRoot struct {
 
 	Subscription struct {
 		Stories func(childComplexity int) int
-		Turns   func(childComplexity int, story string) int
+		Turns   func(childComplexity int, story int) int
 	}
 
 	Turn struct {
@@ -91,12 +91,12 @@ type MutationResolver interface {
 }
 type QueryResolver interface {
 	Stories(ctx context.Context) ([]*model.Story, error)
-	Story(ctx context.Context, id string) (*model.Story, error)
+	Story(ctx context.Context, id int) (*model.Story, error)
 	Users(ctx context.Context) ([]*model.User, error)
-	User(ctx context.Context, id string) (*model.User, error)
+	User(ctx context.Context, id int) (*model.User, error)
 }
 type SubscriptionResolver interface {
-	Turns(ctx context.Context, story string) (<-chan *model.Turn, error)
+	Turns(ctx context.Context, story int) (<-chan *model.Turn, error)
 	Stories(ctx context.Context) (<-chan *model.Story, error)
 }
 
@@ -163,7 +163,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Story(childComplexity, args["id"].(string)), true
+		return e.complexity.Query.Story(childComplexity, args["id"].(int)), true
 
 	case "Query.user":
 		if e.complexity.Query.User == nil {
@@ -175,7 +175,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.User(childComplexity, args["id"].(string)), true
+		return e.complexity.Query.User(childComplexity, args["id"].(int)), true
 
 	case "Query.users":
 		if e.complexity.Query.Users == nil {
@@ -243,7 +243,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Subscription.Turns(childComplexity, args["story"].(string)), true
+		return e.complexity.Subscription.Turns(childComplexity, args["story"].(int)), true
 
 	case "Turn.id":
 		if e.complexity.Turn.ID == nil {
@@ -375,13 +375,13 @@ type Story {
 }
 
 type Turn {
-    id: ID!
+    id: Int!
     user: User!
     value: String!
 }
 
 type User {
-    id: ID!
+    id: Int!
     name: String!
 }
 
@@ -391,15 +391,15 @@ input StoryInput {
 }
 
 input TurnInput {
-    user: ID!
+    user: Int!
     value: String!
 }
 
 type Query {
     stories: [Story!]!
-    story(id: ID!): Story!
+    story(id: Int!): Story!
     users: [User!]!
-    user(id: ID!): User!
+    user(id: Int!): User!
 }
 
 type Mutation {
@@ -409,7 +409,7 @@ type Mutation {
 }
 
 type Subscription {
-    turns(story: ID!): Turn!
+    turns(story: Int!): Turn!
     stories: Story!
 }
 `, BuiltIn: false},
@@ -468,10 +468,10 @@ func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs
 func (ec *executionContext) field_Query_story_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 string
+	var arg0 int
 	if tmp, ok := rawArgs["id"]; ok {
 		ctx := graphql.WithFieldInputContext(ctx, graphql.NewFieldInputWithField("id"))
-		arg0, err = ec.unmarshalNID2string(ctx, tmp)
+		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -483,10 +483,10 @@ func (ec *executionContext) field_Query_story_args(ctx context.Context, rawArgs 
 func (ec *executionContext) field_Query_user_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 string
+	var arg0 int
 	if tmp, ok := rawArgs["id"]; ok {
 		ctx := graphql.WithFieldInputContext(ctx, graphql.NewFieldInputWithField("id"))
-		arg0, err = ec.unmarshalNID2string(ctx, tmp)
+		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -498,10 +498,10 @@ func (ec *executionContext) field_Query_user_args(ctx context.Context, rawArgs m
 func (ec *executionContext) field_Subscription_turns_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 string
+	var arg0 int
 	if tmp, ok := rawArgs["story"]; ok {
 		ctx := graphql.WithFieldInputContext(ctx, graphql.NewFieldInputWithField("story"))
-		arg0, err = ec.unmarshalNID2string(ctx, tmp)
+		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -722,7 +722,7 @@ func (ec *executionContext) _Query_story(ctx context.Context, field graphql.Coll
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Story(rctx, args["id"].(string))
+		return ec.resolvers.Query().Story(rctx, args["id"].(int))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -797,7 +797,7 @@ func (ec *executionContext) _Query_user(ctx context.Context, field graphql.Colle
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().User(rctx, args["id"].(string))
+		return ec.resolvers.Query().User(rctx, args["id"].(int))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1111,7 +1111,7 @@ func (ec *executionContext) _Subscription_turns(ctx context.Context, field graph
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Subscription().Turns(rctx, args["story"].(string))
+		return ec.resolvers.Subscription().Turns(rctx, args["story"].(int))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1211,9 +1211,9 @@ func (ec *executionContext) _Turn_id(ctx context.Context, field graphql.Collecte
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(int)
 	fc.Result = res
-	return ec.marshalNID2string(ctx, field.Selections, res)
+	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Turn_user(ctx context.Context, field graphql.CollectedField, obj *model.Turn) (ret graphql.Marshaler) {
@@ -1313,9 +1313,9 @@ func (ec *executionContext) _User_id(ctx context.Context, field graphql.Collecte
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(int)
 	fc.Result = res
-	return ec.marshalNID2string(ctx, field.Selections, res)
+	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _User_name(ctx context.Context, field graphql.CollectedField, obj *model.User) (ret graphql.Marshaler) {
@@ -2445,7 +2445,7 @@ func (ec *executionContext) unmarshalInputTurnInput(ctx context.Context, obj int
 			var err error
 
 			ctx := graphql.WithFieldInputContext(ctx, graphql.NewFieldInputWithField("user"))
-			it.User, err = ec.unmarshalNID2string(ctx, v)
+			it.User, err = ec.unmarshalNInt2int(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -2993,21 +2993,6 @@ func (ec *executionContext) unmarshalNBoolean2bool(ctx context.Context, v interf
 
 func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.SelectionSet, v bool) graphql.Marshaler {
 	res := graphql.MarshalBoolean(v)
-	if res == graphql.Null {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "must not be null")
-		}
-	}
-	return res
-}
-
-func (ec *executionContext) unmarshalNID2string(ctx context.Context, v interface{}) (string, error) {
-	res, err := graphql.UnmarshalID(v)
-	return res, graphql.WrapErrorWithInputPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNID2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
-	res := graphql.MarshalID(v)
 	if res == graphql.Null {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")

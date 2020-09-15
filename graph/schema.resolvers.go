@@ -27,7 +27,7 @@ func (r *queryResolver) Stories(ctx context.Context) ([]*model.Story, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 
-func (r *queryResolver) Story(ctx context.Context, id string) (*model.Story, error) {
+func (r *queryResolver) Story(ctx context.Context, id int) (*model.Story, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 
@@ -35,11 +35,11 @@ func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 
-func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
+func (r *queryResolver) User(ctx context.Context, id int) (*model.User, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 
-func (r *subscriptionResolver) Turns(ctx context.Context, story string) (<-chan *model.Turn, error) {
+func (r *subscriptionResolver) Turns(ctx context.Context, story int) (<-chan *model.Turn, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 

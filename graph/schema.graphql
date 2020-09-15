@@ -12,13 +12,13 @@ type Story {
 }
 
 type Turn {
-    id: ID!
+    id: Int!
     user: User!
     value: String!
 }
 
 type User {
-    id: ID!
+    id: Int!
     name: String!
 }
 
@@ -28,15 +28,15 @@ input StoryInput {
 }
 
 input TurnInput {
-    user: ID!
+    user: Int!
     value: String!
 }
 
 type Query {
     stories: [Story!]!
-    story(id: ID!): Story!
+    story(id: Int!): Story!
     users: [User!]!
-    user(id: ID!): User!
+    user(id: Int!): User!
 }
 
 type Mutation {
@@ -46,6 +46,6 @@ type Mutation {
 }
 
 type Subscription {
-    turns(story: ID!): Turn!
+    turns(story: Int!): Turn!
     stories: Story!
 }
