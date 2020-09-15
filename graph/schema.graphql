@@ -1,25 +1,41 @@
-# GraphQL schema example
+# GraphQL schema
 #
 # https://gqlgen.com/getting-started/
+
+scalar Time
 
 type Story {
     id: String!
     name: String!
     online: Int!
     people: Int!
-    tags: [String!]!
+    tags: [Tag!]!
     turns: [Turn!]!
+    createdAt: Time!
+    updatedAt: Time!
 }
 
 type Turn {
     id: Int!
     user: User!
+    story: Story!
     value: String!
+    createdAt: Time!
+    updatedAt: Time!
 }
 
 type User {
     id: Int!
     name: String!
+    createdAt: Time!
+    updatedAt: Time!
+}
+
+type Tag {
+    id: Int!
+    name: String!
+    createdAt: Time!
+    updatedAt: Time!
 }
 
 input StoryInput {

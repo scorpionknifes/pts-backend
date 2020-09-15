@@ -13,6 +13,7 @@ import (
 	"github.com/rs/cors"
 	"github.com/scorpionknifes/pts-backend/graph"
 	"github.com/scorpionknifes/pts-backend/graph/generated"
+	database "github.com/scorpionknifes/pts-backend/internal/pkg/db/sql"
 )
 
 const defaultPort = "8080"
@@ -23,6 +24,8 @@ func main() {
 	if port == "" {
 		port = defaultPort
 	}
+
+	database.InitDB()
 
 	router := chi.NewRouter()
 	router.Use(middleware.Logger)

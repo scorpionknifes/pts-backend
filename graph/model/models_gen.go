@@ -2,13 +2,19 @@
 
 package model
 
+import (
+	"time"
+)
+
 type Story struct {
-	ID     string   `json:"id"`
-	Name   string   `json:"name"`
-	Online int      `json:"online"`
-	People int      `json:"people"`
-	Tags   []string `json:"tags"`
-	Turns  []*Turn  `json:"turns"`
+	ID        string    `json:"id"`
+	Name      string    `json:"name"`
+	Online    int       `json:"online"`
+	People    int       `json:"people"`
+	Tags      []*Tag    `json:"tags"`
+	Turns     []*Turn   `json:"turns"`
+	CreatedAt time.Time `json:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
 }
 
 type StoryInput struct {
@@ -16,10 +22,20 @@ type StoryInput struct {
 	Tags []string `json:"tags"`
 }
 
+type Tag struct {
+	ID        int       `json:"id"`
+	Name      string    `json:"name"`
+	CreatedAt time.Time `json:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
+}
+
 type Turn struct {
-	ID    int    `json:"id"`
-	User  *User  `json:"user"`
-	Value string `json:"value"`
+	ID        int       `json:"id"`
+	User      *User     `json:"user"`
+	Story     *Story    `json:"story"`
+	Value     string    `json:"value"`
+	CreatedAt time.Time `json:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
 }
 
 type TurnInput struct {
@@ -28,6 +44,8 @@ type TurnInput struct {
 }
 
 type User struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
+	ID        int       `json:"id"`
+	Name      string    `json:"name"`
+	CreatedAt time.Time `json:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
 }
