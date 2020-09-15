@@ -2,50 +2,12 @@
 
 package model
 
-import (
-	"time"
-)
-
-type Story struct {
-	ID        string    `json:"id"`
-	Name      string    `json:"name"`
-	Online    int       `json:"online"`
-	People    int       `json:"people"`
-	Tags      []*Tag    `json:"tags"`
-	Turns     []*Turn   `json:"turns"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
-}
-
 type StoryInput struct {
 	Name string   `json:"name"`
 	Tags []string `json:"tags"`
 }
 
-type Tag struct {
-	ID        int       `json:"id"`
-	Name      string    `json:"name"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
-}
-
-type Turn struct {
-	ID        int       `json:"id"`
-	User      *User     `json:"user"`
-	Story     *Story    `json:"story"`
-	Value     string    `json:"value"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
-}
-
 type TurnInput struct {
 	User  int    `json:"user"`
 	Value string `json:"value"`
-}
-
-type User struct {
-	ID        int       `json:"id"`
-	Name      string    `json:"name"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
 }

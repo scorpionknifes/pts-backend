@@ -5,11 +5,11 @@
 scalar Time
 
 type Story {
-    id: String!
+    id: Int!
     name: String!
     online: Int!
     people: Int!
-    tags: [Tag!]!
+    tags: String!
     turns: [Turn!]!
     createdAt: Time!
     updatedAt: Time!
@@ -25,13 +25,6 @@ type Turn {
 }
 
 type User {
-    id: Int!
-    name: String!
-    createdAt: Time!
-    updatedAt: Time!
-}
-
-type Tag {
     id: Int!
     name: String!
     createdAt: Time!
