@@ -6,17 +6,27 @@ package graph
 import (
 	"context"
 	"fmt"
+	"math/rand"
 
 	"github.com/scorpionknifes/pts-backend/graph/generated"
 	"github.com/scorpionknifes/pts-backend/graph/model"
 )
 
 func (r *mutationResolver) CreateUser(ctx context.Context) (*model.User, error) {
-	panic(fmt.Errorf("not implemented"))
+	user := model.User{
+		Name: fmt.Sprintf("Anonymous%d", rand.Intn(9999)),
+	}
+	tx := r.DB.Create(&user)
+	return &user, tx.Error
 }
 
 func (r *mutationResolver) CreateStory(ctx context.Context, input model.StoryInput) (*model.Story, error) {
-	panic(fmt.Errorf("not implemented"))
+	story := model.Story{
+		Name: input.Name,
+		Tags: input.Tags,
+	}
+	tx := r.DB.Create(&story)
+	return &story, tx.Error
 }
 
 func (r *mutationResolver) CreateTurn(ctx context.Context, input model.TurnInput) (*model.User, error) {
@@ -24,19 +34,27 @@ func (r *mutationResolver) CreateTurn(ctx context.Context, input model.TurnInput
 }
 
 func (r *queryResolver) Stories(ctx context.Context) ([]*model.Story, error) {
-	panic(fmt.Errorf("not implemented"))
+	var stories []*model.Story
+	tx := r.DB.Preload("Turns").Find(&stories)
+	return stories, tx.Error
 }
 
 func (r *queryResolver) Story(ctx context.Context, id int) (*model.Story, error) {
-	panic(fmt.Errorf("not implemented"))
+	var story *model.Story
+	tx := r.DB.First(&story, id)
+	return story, tx.Error
 }
 
 func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
-	panic(fmt.Errorf("not implemented"))
+	var users []*model.User
+	tx := r.DB.Preload("Turns").Find(&users)
+	return users, tx.Error
 }
 
 func (r *queryResolver) User(ctx context.Context, id int) (*model.User, error) {
-	panic(fmt.Errorf("not implemented"))
+	var user *model.User
+	tx := r.DB.First(&user, id)
+	return user, tx.Error
 }
 
 func (r *subscriptionResolver) Turns(ctx context.Context, story int) (<-chan *model.Turn, error) {

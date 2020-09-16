@@ -33,7 +33,7 @@ type User {
 
 input StoryInput {
     name: String!
-    tags: [String!]!
+    tags: String!
 }
 
 input TurnInput {

@@ -3,8 +3,8 @@
 package model
 
 type StoryInput struct {
-	Name string   `json:"name"`
-	Tags []string `json:"tags"`
+	Name string `json:"name"`
+	Tags string `json:"tags"`
 }
 
 type TurnInput struct {
