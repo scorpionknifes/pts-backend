@@ -5,7 +5,7 @@ import (
 )
 
 // Stories chans
-var Stories = make(map[chan *model.Story]int, 0)
+var Stories = make(map[chan *model.Story]int)
 
 // Add Story to chans
 func Add() chan *model.Story {
