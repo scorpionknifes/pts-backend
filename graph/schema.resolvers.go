@@ -10,6 +10,8 @@ import (
 
 	"github.com/scorpionknifes/pts-backend/graph/generated"
 	"github.com/scorpionknifes/pts-backend/graph/model"
+	"github.com/scorpionknifes/pts-backend/internal/stories"
+	"github.com/scorpionknifes/pts-backend/internal/turns"
 )
 
 func (r *mutationResolver) CreateUser(ctx context.Context) (*model.User, error) {
@@ -64,11 +66,11 @@ func (r *queryResolver) User(ctx context.Context, id int) (*model.User, error) {
 }
 
 func (r *subscriptionResolver) Turns(ctx context.Context, story int) (<-chan *model.Turn, error) {
-	panic(fmt.Errorf("not implemented"))
+	return turns.Add(story), nil
 }
 
 func (r *subscriptionResolver) Stories(ctx context.Context) (<-chan *model.Story, error) {
-	panic(fmt.Errorf("not implemented"))
+	return stories.Add(), nil
 }
 
 // Mutation returns generated.MutationResolver implementation.
