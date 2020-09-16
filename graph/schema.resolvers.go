@@ -28,6 +28,7 @@ func (r *mutationResolver) CreateStory(ctx context.Context, input model.StoryInp
 		Tags: input.Tags,
 	}
 	tx := r.DB.Create(&story)
+	stories.Update(story)
 	return &story, tx.Error
 }
 
@@ -37,8 +38,19 @@ func (r *mutationResolver) CreateTurn(ctx context.Context, input model.TurnInput
 		StoryID: input.StoryID,
 		Value:   input.Value,
 	}
-	tx := r.DB.Create(&turn)
-	return &turn, tx.Error
+	r.DB.Create(&turn)
+	turns.Update(input.StoryID, turn)
+	var story *model.Story
+	type Result struct {
+		Name string
+		Age  int
+	}
+
+	var result model.Count
+	r.DB.Raw("SELECT COUNT(DISTINCT user_id),COUNT(user_id) FROM  [dbo].[turns] WHERE story_id = ?", input.StoryID).Scan(&result)
+	r.DB.Model(&story).Update("Online", result.Online)
+	r.DB.Model(&story).Update("People", result.People)
+	return &turn, nil
 }
 
 func (r *queryResolver) Stories(ctx context.Context) ([]*model.Story, error) {

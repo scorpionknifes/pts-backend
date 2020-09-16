@@ -5,18 +5,18 @@ import (
 )
 
 // Stories chans
-var Stories = make([]chan *model.Story, 0)
+var Stories = make(map[chan *model.Story]int, 0)
 
 // Add Story to chans
 func Add() chan *model.Story {
 	channel := make(chan *model.Story, 1)
-	Stories = append(Stories, channel)
+	Stories[channel] = 0
 	return channel
 }
 
 // Update story Story
 func Update(data model.Story) {
-	for _, story := range Stories {
+	for story := range Stories {
 		story <- &data
 	}
 }
