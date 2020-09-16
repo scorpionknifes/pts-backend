@@ -7,7 +7,7 @@ import (
 type Story struct {
 	ID        int       `json:"id"`
 	Name      string    `json:"name"`
-	Online    int       `json:"online"`
+	Count     int       `json:"count"`
 	People    int       `json:"people"`
 	Tags      string    `json:"tags"`
 	Turns     []*Turn   `json:"turns"`
@@ -34,6 +34,6 @@ type User struct {
 }
 
 type Count struct {
-	Online int
+	Count  int
 	People int
 }

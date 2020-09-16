@@ -60,10 +60,10 @@ type ComplexityRoot struct {
 	}
 
 	Story struct {
+		Count     func(childComplexity int) int
 		CreatedAt func(childComplexity int) int
 		ID        func(childComplexity int) int
 		Name      func(childComplexity int) int
-		Online    func(childComplexity int) int
 		People    func(childComplexity int) int
 		Tags      func(childComplexity int) int
 		Turns     func(childComplexity int) int
@@ -192,6 +192,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.Users(childComplexity), true
 
+	case "Story.count":
+		if e.complexity.Story.Count == nil {
+			break
+		}
+
+		return e.complexity.Story.Count(childComplexity), true
+
 	case "Story.createdAt":
 		if e.complexity.Story.CreatedAt == nil {
 			break
@@ -212,13 +219,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Story.Name(childComplexity), true
-
-	case "Story.online":
-		if e.complexity.Story.Online == nil {
-			break
-		}
-
-		return e.complexity.Story.Online(childComplexity), true
 
 	case "Story.people":
 		if e.complexity.Story.People == nil {
@@ -427,7 +427,7 @@ scalar Time
 type Story {
     id: Int!
     name: String!
-    online: Int!
+    count: Int!
     people: Int!
     tags: String!
     turns: [Turn!]!
@@ -1018,7 +1018,7 @@ func (ec *executionContext) _Story_name(ctx context.Context, field graphql.Colle
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Story_online(ctx context.Context, field graphql.CollectedField, obj *model.Story) (ret graphql.Marshaler) {
+func (ec *executionContext) _Story_count(ctx context.Context, field graphql.CollectedField, obj *model.Story) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -1035,7 +1035,7 @@ func (ec *executionContext) _Story_online(ctx context.Context, field graphql.Col
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Online, nil
+		return obj.Count, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -2932,8 +2932,8 @@ func (ec *executionContext) _Story(ctx context.Context, sel ast.SelectionSet, ob
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "online":
-			out.Values[i] = ec._Story_online(ctx, field, obj)
+		case "count":
+			out.Values[i] = ec._Story_count(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}

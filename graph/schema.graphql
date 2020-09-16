@@ -7,7 +7,7 @@ scalar Time
 type Story {
     id: Int!
     name: String!
-    online: Int!
+    count: Int!
     people: Int!
     tags: String!
     turns: [Turn!]!
