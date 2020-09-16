@@ -37,7 +37,8 @@ input StoryInput {
 }
 
 input TurnInput {
-    user: Int!
+    userID: Int!
+    storyID: Int!
     value: String!
 }
 
@@ -51,7 +52,7 @@ type Query {
 type Mutation {
     createUser: User!
     createStory(input: StoryInput!): Story!
-    createTurn(input: TurnInput!): User!
+    createTurn(input: TurnInput!): Turn!
 }
 
 type Subscription {

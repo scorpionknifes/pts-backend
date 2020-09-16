@@ -8,6 +8,7 @@ type StoryInput struct {
 }
 
 type TurnInput struct {
-	User  int    `json:"user"`
-	Value string `json:"value"`
+	UserID  int    `json:"userID"`
+	StoryID int    `json:"storyID"`
+	Value   string `json:"value"`
 }

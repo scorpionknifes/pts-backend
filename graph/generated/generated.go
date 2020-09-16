@@ -95,7 +95,7 @@ type ComplexityRoot struct {
 type MutationResolver interface {
 	CreateUser(ctx context.Context) (*model.User, error)
 	CreateStory(ctx context.Context, input model.StoryInput) (*model.Story, error)
-	CreateTurn(ctx context.Context, input model.TurnInput) (*model.User, error)
+	CreateTurn(ctx context.Context, input model.TurnInput) (*model.Turn, error)
 }
 type QueryResolver interface {
 	Stories(ctx context.Context) ([]*model.Story, error)
@@ -457,7 +457,8 @@ input StoryInput {
 }
 
 input TurnInput {
-    user: Int!
+    userID: Int!
+    storyID: Int!
     value: String!
 }
 
@@ -471,7 +472,7 @@ type Query {
 type Mutation {
     createUser: User!
     createStory(input: StoryInput!): Story!
-    createTurn(input: TurnInput!): User!
+    createTurn(input: TurnInput!): Turn!
 }
 
 type Subscription {
@@ -725,9 +726,9 @@ func (ec *executionContext) _Mutation_createTurn(ctx context.Context, field grap
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.User)
+	res := resTmp.(*model.Turn)
 	fc.Result = res
-	return ec.marshalNUser2ᚖgithubᚗcomᚋscorpionknifesᚋptsᚑbackendᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
+	return ec.marshalNTurn2ᚖgithubᚗcomᚋscorpionknifesᚋptsᚑbackendᚋgraphᚋmodelᚐTurn(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_stories(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -2745,11 +2746,19 @@ func (ec *executionContext) unmarshalInputTurnInput(ctx context.Context, obj int
 
 	for k, v := range asMap {
 		switch k {
-		case "user":
+		case "userID":
 			var err error
 
-			ctx := graphql.WithFieldInputContext(ctx, graphql.NewFieldInputWithField("user"))
-			it.User, err = ec.unmarshalNInt2int(ctx, v)
+			ctx := graphql.WithFieldInputContext(ctx, graphql.NewFieldInputWithField("userID"))
+			it.UserID, err = ec.unmarshalNInt2int(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "storyID":
+			var err error
+
+			ctx := graphql.WithFieldInputContext(ctx, graphql.NewFieldInputWithField("storyID"))
+			it.StoryID, err = ec.unmarshalNInt2int(ctx, v)
 			if err != nil {
 				return it, err
 			}

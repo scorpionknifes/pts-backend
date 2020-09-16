@@ -29,8 +29,14 @@ func (r *mutationResolver) CreateStory(ctx context.Context, input model.StoryInp
 	return &story, tx.Error
 }
 
-func (r *mutationResolver) CreateTurn(ctx context.Context, input model.TurnInput) (*model.User, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *mutationResolver) CreateTurn(ctx context.Context, input model.TurnInput) (*model.Turn, error) {
+	turn := model.Turn{
+		UserID:  input.UserID,
+		StoryID: input.StoryID,
+		Value:   input.Value,
+	}
+	tx := r.DB.Create(&turn)
+	return &turn, tx.Error
 }
 
 func (r *queryResolver) Stories(ctx context.Context) ([]*model.Story, error) {
