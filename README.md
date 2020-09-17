@@ -6,7 +6,9 @@
 
 This project is an assignment for Microsoft Student Accelerator NZ 2020 Phase 2.
 
-Pass the Story Backend for [frontend](https://github.com/scorpionknifes/pts-frontend)
+Pass the Story Backend for [frontend](https://github.com/scorpionknifes/pts-frontend).
+
+Using [Docker](https://hub.docker.com/repository/docker/zhenknz/pts-backend) image to run on azure.
 
 The following project uses:
 - Golang
