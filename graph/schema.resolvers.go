@@ -84,7 +84,8 @@ func (r *subscriptionResolver) Turns(ctx context.Context, story int) (<-chan *mo
 	return turns.Add(story), nil
 }
 
-func (r *subscriptionResolver) Stories(ctx context.Context) (<-chan *model.Story, error) {
+func (r *subscriptionResolver) Stories(ctx context.Context) (<-chan []*model.Story, error) {
+
 	return stories.Add(), nil
 }
 

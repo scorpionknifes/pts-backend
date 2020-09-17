@@ -57,5 +57,5 @@ type Mutation {
 
 type Subscription {
     turns(story: Int!): Turn!
-    stories: Story!
+    stories: [Story!]!
 }

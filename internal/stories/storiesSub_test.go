@@ -7,7 +7,7 @@ import (
 )
 
 func init() {
-	Stories = make(map[chan *model.Story]int)
+	Stories = make(map[chan []*model.Story]int)
 }
 
 func TestAdd(t *testing.T) {
@@ -21,7 +21,7 @@ func TestUpdate(t *testing.T) {
 	channel := Add()
 	Update(model.Story{Name: "test"})
 	test := <-channel
-	if test.Name != "test" {
+	if test[0].Name != "test" {
 		t.Errorf("Update() has failed update correct data")
 	}
 }

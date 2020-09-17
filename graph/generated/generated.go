@@ -106,7 +106,7 @@ type QueryResolver interface {
 }
 type SubscriptionResolver interface {
 	Turns(ctx context.Context, story int) (<-chan *model.Turn, error)
-	Stories(ctx context.Context) (<-chan *model.Story, error)
+	Stories(ctx context.Context) (<-chan []*model.Story, error)
 }
 type TurnResolver interface {
 	User(ctx context.Context, obj *model.Turn) (*model.User, error)
@@ -481,7 +481,7 @@ type Mutation {
 
 type Subscription {
     turns(story: Int!): Turn!
-    stories: Story!
+    stories: [Story!]!
 }
 `, BuiltIn: false},
 }
@@ -1307,7 +1307,7 @@ func (ec *executionContext) _Subscription_stories(ctx context.Context, field gra
 		return nil
 	}
 	return func() graphql.Marshaler {
-		res, ok := <-resTmp.(<-chan *model.Story)
+		res, ok := <-resTmp.(<-chan []*model.Story)
 		if !ok {
 			return nil
 		}
@@ -1315,7 +1315,7 @@ func (ec *executionContext) _Subscription_stories(ctx context.Context, field gra
 			w.Write([]byte{'{'})
 			graphql.MarshalString(field.Alias).MarshalGQL(w)
 			w.Write([]byte{':'})
-			ec.marshalNStory2ᚖgithubᚗcomᚋscorpionknifesᚋptsᚑbackendᚋgraphᚋmodelᚐStory(ctx, field.Selections, res).MarshalGQL(w)
+			ec.marshalNStory2ᚕᚖgithubᚗcomᚋscorpionknifesᚋptsᚑbackendᚋgraphᚋmodelᚐStoryᚄ(ctx, field.Selections, res).MarshalGQL(w)
 			w.Write([]byte{'}'})
 		})
 	}
