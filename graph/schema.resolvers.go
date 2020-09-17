@@ -6,7 +6,6 @@ package graph
 import (
 	"context"
 	"fmt"
-	"log"
 	"math/rand"
 
 	"github.com/scorpionknifes/pts-backend/graph/generated"
@@ -39,6 +38,7 @@ func (r *mutationResolver) CreateTurn(ctx context.Context, input model.TurnInput
 		StoryID: input.StoryID,
 		Value:   input.Value,
 	}
+
 	r.DB.Create(&turn)
 	turns.Update(input.StoryID, turn)
 	var story *model.Story
@@ -49,7 +49,7 @@ func (r *mutationResolver) CreateTurn(ctx context.Context, input model.TurnInput
 
 	var result model.Count
 	r.DB.Raw("SELECT COUNT(DISTINCT user_id) as people, COUNT(user_id) as count FROM  [dbo].[turns] WHERE story_id = ?", input.StoryID).Scan(&result)
-	log.Println(result)
+
 	r.DB.Model(&story).Where("id = ?", input.StoryID).Update("Count", result.Count).Update("People", result.People)
 	return &turn, nil
 }
