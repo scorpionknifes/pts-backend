@@ -7,12 +7,14 @@ import (
 )
 
 func init() {
-	Turns = make(map[int]map[chan *model.Turn]int)
+	Turns = SafeTurns{
+		Turns: make(map[int]map[chan *model.Turn]int),
+	}
 }
 
 func TestAdd(t *testing.T) {
 	channel := Add(1)
-	if _, ok := Turns[1][channel]; !ok {
+	if _, ok := Turns.Turns[1][channel]; !ok {
 		t.Errorf("Add() failed to add")
 	}
 }

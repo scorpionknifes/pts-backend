@@ -40,7 +40,7 @@ func (r *mutationResolver) CreateTurn(ctx context.Context, input model.TurnInput
 		Value:   input.Value,
 	}
 
-	r.DB.Create(&turn)
+	r.DB.Preload("Users").Create(&turn)
 	turns.Update(input.StoryID, turn)
 	var story *model.Story
 	type Result struct {

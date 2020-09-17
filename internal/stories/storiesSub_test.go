@@ -7,12 +7,14 @@ import (
 )
 
 func init() {
-	Stories = make(map[chan []*model.Story]int)
+	Stories = SafeStories{
+		Stories: make(map[chan []*model.Story]int),
+	}
 }
 
 func TestAdd(t *testing.T) {
 	channel := Add()
-	if _, ok := Stories[channel]; !ok {
+	if _, ok := Stories.Stories[channel]; !ok {
 		t.Errorf("Add() failed to add")
 	}
 }
