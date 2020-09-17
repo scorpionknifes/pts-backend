@@ -6,6 +6,7 @@ package graph
 import (
 	"context"
 	"fmt"
+	"log"
 	"math/rand"
 
 	"github.com/scorpionknifes/pts-backend/graph/generated"
@@ -61,9 +62,10 @@ func (r *queryResolver) Stories(ctx context.Context) ([]*model.Story, error) {
 }
 
 func (r *queryResolver) Story(ctx context.Context, id int) (*model.Story, error) {
-	var story *model.Story
+	story := model.Story{}
 	tx := r.DB.First(&story, id)
-	return story, tx.Error
+	log.Println(story)
+	return &story, tx.Error
 }
 
 func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
@@ -73,9 +75,9 @@ func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
 }
 
 func (r *queryResolver) User(ctx context.Context, id int) (*model.User, error) {
-	var user *model.User
+	user := model.User{}
 	tx := r.DB.First(&user, id)
-	return user, tx.Error
+	return &user, tx.Error
 }
 
 func (r *subscriptionResolver) Turns(ctx context.Context, story int) (<-chan *model.Turn, error) {
