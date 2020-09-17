@@ -54,3 +54,8 @@ models:
       - github.com/99designs/gqlgen/graphql.Int
       - github.com/99designs/gqlgen/graphql.Int64
       - github.com/99designs/gqlgen/graphql.Int32
+  Turn:
+    model: github.com/scorpionknifes/pts-backend/graph/model.Turn
+    fields:
+      user:
+        resolver: true

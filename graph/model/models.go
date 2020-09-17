@@ -18,7 +18,6 @@ type Story struct {
 type Turn struct {
 	ID        int `json:"id"`
 	UserID    int
-	User      *User `json:"user"`
 	StoryID   int
 	Story     *Story    `json:"story"`
 	Value     string    `json:"value"`

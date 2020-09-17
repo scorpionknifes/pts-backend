@@ -63,7 +63,7 @@ func (r *queryResolver) Stories(ctx context.Context) ([]*model.Story, error) {
 
 func (r *queryResolver) Story(ctx context.Context, id int) (*model.Story, error) {
 	story := model.Story{}
-	tx := r.DB.First(&story, id)
+	tx := r.DB.Preload("Turns").First(&story, id)
 	log.Println(story)
 	return &story, tx.Error
 }
@@ -88,6 +88,12 @@ func (r *subscriptionResolver) Stories(ctx context.Context) (<-chan *model.Story
 	return stories.Add(), nil
 }
 
+func (r *turnResolver) User(ctx context.Context, obj *model.Turn) (*model.User, error) {
+	user := model.User{}
+	tx := r.DB.First(&user, obj.UserID)
+	return &user, tx.Error
+}
+
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 
@@ -97,6 +103,10 @@ func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 // Subscription returns generated.SubscriptionResolver implementation.
 func (r *Resolver) Subscription() generated.SubscriptionResolver { return &subscriptionResolver{r} }
 
+// Turn returns generated.TurnResolver implementation.
+func (r *Resolver) Turn() generated.TurnResolver { return &turnResolver{r} }
+
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
+type turnResolver struct{ *Resolver }
