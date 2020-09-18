@@ -1,14 +1,17 @@
 # Pass the Story Backend
 
-[![Build Status](https://dev.azure.com/chengzhenyang/pts-backend/_apis/build/status/scorpionknifes.pts-backend?branchName=master)](https://dev.azure.com/chengzhenyang/pts-backend/_build/latest?definitionId=3&branchName=master)
+[![Build Status](https://dev.azure.com/chengzhenyang/pts-backend/_apis/build/status/scorpionknifes.pts-backend?branchName=master)](https://dev.azure.com/chengzhenyang/pts-backend/_build/latest?definitionId=3&branchName=master) [![Go Report Card](https://goreportcard.com/badge/github.com/scorpionknifes/pts-backend)](https://goreportcard.com/report/github.com/scorpionknifes/pts-backend)
+[![Docker Status](https://img.shields.io/docker/cloud/build/zhenknz/pts-backend)](https://hub.docker.com/repository/docker/zhenknz/pts-backend/)
 
-[Hosted on Azure](https://pts-backend.azurewebsites.net/)
+[Hosted on Azure](https://pts-backend.azurewebsites.net/) and [Self Hosted](https://zhenknz.ml)
 
 This project is an assignment for Microsoft Student Accelerator NZ 2020 Phase 2.
 
 Pass the Story Backend for [frontend](https://github.com/scorpionknifes/pts-frontend).
 
 Using [Docker](https://hub.docker.com/repository/docker/zhenknz/pts-backend) image to run on azure.
+
+
 
 The following project uses:
 - Golang
@@ -47,3 +50,65 @@ gqlgen Commans
 ```go
 gqlgen generate // run when change schema.graphql
 ```
+
+## Example Queries
+<details>
+  <summary>Click to expand!</summary>
+  ```go
+# Write your query or mutation here
+query stories {
+  stories{
+    id
+    name
+    count
+    people
+    tags
+    createdAt
+    updatedAt
+  }
+}
+
+mutation createStory {
+  createStory(input: {
+    name: "Anonymous's 2000",
+    tags: "example, cool, love"
+  }){
+    id
+    name
+    tags
+  }
+}
+
+subscription subscriptionStory {
+  stories{
+    id
+    name
+    count
+    people
+    tags
+    createdAt
+    updatedAt
+  }
+}
+
+query Story {
+  story(id: 1) {
+    id
+    name
+    turns{
+      id
+      value
+      user{
+        id
+      }
+    }
+    count
+    people
+    tags
+    createdAt
+    updatedAt
+  }
+}
+  ```
+
+</details>
