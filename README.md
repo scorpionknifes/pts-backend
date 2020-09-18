@@ -9,7 +9,7 @@ This project is an assignment for Microsoft Student Accelerator NZ 2020 Phase 2.
 
 Pass the Story Backend for [frontend](https://github.com/scorpionknifes/pts-frontend).
 
-Using [Docker](https://hub.docker.com/repository/docker/zhenknz/pts-backend) image to run on azure.
+Using [Docker](https://hub.docker.com/repository/docker/zhenknz/pts-backend) image to run golang on azure.
 
 
 
@@ -19,6 +19,7 @@ The following project uses:
 - [GORM](https://gorm.io/index.html)
 - SQL Server
 - Docker
+- Testing - [go-sqlmock](https://github.com/DATA-DOG/go-sqlmock)
 
 [Microsoft Student Accelerator](http://aka.ms/nzmsawebsite)
 [2020-Phase-2](https://github.com/NZMSA/2020-Phase-2)
@@ -108,7 +109,6 @@ query Story {
     createdAt
     updatedAt
   }
-}
-  ```
+}```
 
 </details>

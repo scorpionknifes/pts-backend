@@ -11,7 +11,6 @@ resources:
 variables:
   tag: '$(Build.BuildId)'
 
-stages:
 - stage: Build
   displayName: Build image
   jobs:  
@@ -27,19 +26,3 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
-          
-- stage: Deploy
-  jobs:  
-    - job: Build
-      displayName: Build
-      pool:
-        vmImage: 'ubuntu-latest'
-      steps:
-      - task: AzureRmWebAppDeployment@4
-        inputs:
-          ConnectionType: 'AzureRM'
-          azureSubscription: 'Azure for Students (2d166051-7d87-424d-84f1-705a255a83ff)'
-          appType: 'webAppContainer'
-          WebAppName: 'pts-backend'
-          DockerNamespace: 'zhenknz'
-          DockerRepository: 'pts-backend'
