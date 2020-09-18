@@ -53,9 +53,11 @@ gqlgen generate // run when change schema.graphql
 ```
 
 ## Example Queries
-<details>
-  <summary>Click to expand!</summary>
-  ```go
+
+<details><summary>Click to expand!</summary>
+<p>
+
+```graphql
 # Write your query or mutation here
 query stories {
   stories{
@@ -109,6 +111,7 @@ query Story {
     createdAt
     updatedAt
   }
-}```
-
+}
+```
+</p>
 </details>
