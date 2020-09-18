@@ -3,7 +3,7 @@
 [![Build Status](https://dev.azure.com/chengzhenyang/pts-backend/_apis/build/status/scorpionknifes.pts-backend?branchName=master)](https://dev.azure.com/chengzhenyang/pts-backend/_build/latest?definitionId=3&branchName=master) [![Go Report Card](https://goreportcard.com/badge/github.com/scorpionknifes/pts-backend)](https://goreportcard.com/report/github.com/scorpionknifes/pts-backend)
 [![Docker Status](https://img.shields.io/docker/cloud/build/zhenknz/pts-backend)](https://hub.docker.com/repository/docker/zhenknz/pts-backend/)
 
-[Hosted on Azure](https://pts-backend.azurewebsites.net/) and [Self Hosted](https://zhenknz.ml)
+[Hosted on Azure](https://pts-backend.azurewebsites.net/) and [Self Hosted](https://zhenk.ml/)
 
 This project is an assignment for Microsoft Student Accelerator NZ 2020 Phase 2.
 
