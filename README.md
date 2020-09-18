@@ -33,6 +33,7 @@ Golang Commands - go mod will auto install dependency
 ```bash
 go run server.go
 go build server.go
+go test ./...
 ```
 
 Docker Commands

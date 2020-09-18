@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Story - Story for story table
 type Story struct {
 	ID        int       `json:"id"`
 	Name      string    `json:"name"`
@@ -15,6 +16,7 @@ type Story struct {
 	UpdatedAt time.Time `json:"updatedAt"`
 }
 
+// Turn - Turn for turns table
 type Turn struct {
 	ID        int `json:"id"`
 	UserID    int
@@ -25,6 +27,7 @@ type Turn struct {
 	UpdatedAt time.Time `json:"updatedAt"`
 }
 
+// User - User for users table
 type User struct {
 	ID        int       `json:"id"`
 	Name      string    `json:"name"`
@@ -32,6 +35,7 @@ type User struct {
 	UpdatedAt time.Time `json:"updatedAt"`
 }
 
+// Count - Custom count for number of users
 type Count struct {
 	Count  int
 	People int
